@@ -1069,6 +1069,8 @@ literals and converted to the proper type. '''
                 print('{} = {!r}'.format(name, value))
 
 # Base module ------------------------------------------------------------------
+    class NotModule():
+        pass
 
     # just a tag
     class Module():
@@ -1297,7 +1299,7 @@ A value of 0 uses the whole height.''',
         else:
             self.offset = 0
 
-class Assembly(Dashboard.Module):
+class Assembly(Dashboard.NotModule):
     '''Show the disassembled code surrounding the program counter.
 
 The instructions constituting the current statement are marked, if available.'''
@@ -1737,7 +1739,7 @@ Optionally list the frame arguments and locals too.'''
             info += ' at {}:{}'.format(file_name, file_line)
         return info
 
-class History(Dashboard.Module):
+class History(Dashboard.NotModule):
     '''List the last entries of the value history.'''
 
     def label(self):
@@ -2048,7 +2050,7 @@ The empty list (default) causes to show all the available registers.''',
                     break
         return names
 
-class Threads(Dashboard.Module):
+class Threads(Dashboard.NotModule):
     '''List the currently available threads.'''
 
     def label(self):
@@ -2296,6 +2298,23 @@ set print pretty on
 set print array off
 set print array-indexes on
 set python print-stack full
+
+set pagination off
+
+# For Roku device
+#define skipcurrent
+#    tbreak +1
+#    jump +1
+#end
+
+#set sysroot /opt/benjaminw/rootfs
+#set solib-absolute-prefix /opt/benjaminw/rootfs
+#set tcp connect-timeout 120
+#handle SIG38 noprint nostop
+#handle SIG33 noprint nostop
+#add-auto-load-safe-path /opt/benjaminw/rootfs
+
+#target remote 192.168.0.182:5555
 
 # Start ------------------------------------------------------------------------
 
